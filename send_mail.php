@@ -1,12 +1,12 @@
 <?php
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+    use phpmailer\phpmailer\phpmailer;
+    use phpmailer\phpmailer\exception;
 
-    require "PHPMailer/src/Exception.php";
-    require "PHPMailer/src/PHPMailer.php";
+    require "phpmailer/src/exception.php";
+    require "phpmailer/src/phpmailer.php";
 
-    $mail = new PHPMailer(true);
+    $mail = new phpmailer(true);
 	
     $mail->CharSet = "UTF-8";
 
