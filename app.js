@@ -2,11 +2,8 @@
 const form = document.forms["form"];
 const formArr = Array.from(form);
 const validFormArr = [];
+const button = form.elements["button"];
 
-const file = document.querySelector("#file");
-const fileName = document.querySelector("#file_name");
-const fileBtnClose = document.querySelector("#file_btn_close");
-const maxSize = 20 * 1024 * 1024;
 
 formArr.forEach((el) => {
     if (el.hasAttribute("data-reg")) {
@@ -15,17 +12,11 @@ formArr.forEach((el) => {
     }
 });
 
+
+
 form.addEventListener("input", inputHandler);
 form.addEventListener("submit", formCheck);
 
-file.addEventListener("change", (e) => {
-    checkFile(file.files[0]);
-});
-
-fileBtnClose.addEventListener("click", (e) => {
-    e.preventDefault();
-    fileReset();
-});
 
 function inputHandler({ target }) {
     if (target.hasAttribute("data-reg")) {
@@ -62,45 +53,10 @@ function formCheck(e) {
     formSubmit();
 }
 
-function checkFile(file) {
-    // проверяем тип файла
-    if (
-        ![
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "image/gif",
-            "image/svg+xml",
-        ].includes(file.type)
-    ) {
-        alert("Разрешены только указанные форматы");
-        fileReset();
-        return;
-    }
-
-    // проверяем размер файла (<20 Мб)
-    if (file.size > maxSize) {
-        alert("Файл должен быть менее 20 Мб");
-        fileReset();
-        return;
-    }
-    showFileName(file);
-}
-
-function fileReset() {
-    file.value = "";
-    fileName.textContent = "";
-    fileBtnClose.textContent = "";
-}
-
-function showFileName(file) {
-    fileName.textContent = file.name;
-    fileBtnClose.textContent = "×";
-}
 
 async function formSubmit() {
     const data = serializeForm(form);
-    data.append("image", file.files[0]);
+   
     const response = await sendData(data);
     if (response.ok) {
         let result = await response.json();
@@ -115,12 +71,14 @@ function serializeForm(formNode) {
     return new FormData(form);
 }
 
+
 async function sendData(data) {
     return await fetch("send_mail.php", {
         method: "POST",
         body: data,
     });
 }
+
 
 function formReset() {
     form.reset();

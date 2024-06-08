@@ -9,13 +9,16 @@
     $mail = new PHPMailer(true);
 	
     $mail->CharSet = "UTF-8";
+
     $mail->IsHTML(true);
 
     $name = $_POST["name"];
     $email = $_POST["email"];
 	$phone = $_POST["phone"];
     $message = $_POST["message"];
+
 	$email_template = "template_mail.html";
+
 
     $body = file_get_contents($email_template);
 	$body = str_replace('%name%', $name, $body);
@@ -23,20 +26,17 @@
 	$body = str_replace('%phone%', $phone, $body);
 	$body = str_replace('%message%', $message, $body);
 
-    if (!empty($_FILES["image"]["tmp_name"])) {
-        // путь загрузки файла
-        $filePath = __DIR__ . "/" . $_FILES["image"]["name"];
-        // грузим файл
-        if (copy($_FILES["image"]["tmp_name"], $filePath)) {
-            $fileAttach = $filePath;
-            $mail->addAttachment($fileAttach);
-        }
-    }
+    $theme ="[Заявка с формы]";
 
-    $mail->addAddress("sabrina.agapova86@yandex.ru");
+    
+    $mail->addAddress("agapova_kristina@bk.ru");
+
 	$mail->setFrom($email);
-    $mail->Subject = "Заявка с формы";
+
+    $mail->Subject = $theme;
     $mail->MsgHTML($body);
+
+
 
     if (!$mail->send()) {
         $message = "Ошибка отправки";
