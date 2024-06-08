@@ -1,10 +1,10 @@
 <?php
 
-    use phpmailer\phpmailer\phpmailer;
-    use phpmailer\phpmailer\exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-    require "phpmailer/src/exception.php";
-    require "phpmailer/src/phpmailer.php";
+    require "PHPMailer/src/Exception.php";
+    require "PHPMailer/src/PHPMailer.php";
 
     $mail = new phpmailer(true);
 	
